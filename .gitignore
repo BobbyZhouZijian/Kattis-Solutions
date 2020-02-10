@@ -1,1 +1,4 @@
-!*.cpp
+*.out
+
+# vscode files
+.vscode/
