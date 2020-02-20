@@ -22,15 +22,8 @@ void fast() {
 
 int main(int argc, char const *argv[])
 {
-	int x = 4;
-	int y = 3;
-
-	double z = x / y;
-
-	double z1 = 1.0 * x / y;
-
-	cout << z << " " << z1;
-
+	int i = 2312;
+	cout << to_string(i);
 }
 
 
