@@ -1,4 +1,8 @@
-*.out
+*
+!*.*
 
 # vscode files
 .vscode/
+
+# MacOS
+.DS_Store
