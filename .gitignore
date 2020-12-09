@@ -6,3 +6,6 @@
 
 # MacOS
 .DS_Store
+
+# Execution file
+a.out
