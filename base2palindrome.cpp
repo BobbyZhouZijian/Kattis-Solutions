@@ -12,7 +12,7 @@ int to_int(string a) {
     return x;
 }
 
-set<string> pal;
+unordered_set<string> pal;
 
 bool is_pal(string s) {
     int l = s.length();
