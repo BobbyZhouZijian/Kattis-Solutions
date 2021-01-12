@@ -7,8 +7,5 @@
 # MacOS
 .DS_Store
 
-# Windows
-# *.cpp~
-
 # Execution file
 a.out

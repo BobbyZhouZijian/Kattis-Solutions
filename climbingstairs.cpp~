@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int n,r,k;
+
+void solve() {
+	if (k >= r) {
+		if (k * 2 - r >= n) {
+			cout << 2 * k << endl;
+		} else {
+			cout << 2*k + (n-2*k+r) << endl;
+		}
+	} else {
+		if (r >= n) {
+			cout << 2 * r << endl;
+		} else {
+			cout << n + r << endl;
+		}
+	}
+}
+
+int main() {
+	cin >> n >> r>> k;
+	solve();	
+}
