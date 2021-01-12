@@ -8,7 +8,7 @@
 .DS_Store
 
 # Windows
-# *.cpp~
+*.cpp~
 
 # Execution file
 a.out
