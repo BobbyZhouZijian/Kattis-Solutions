@@ -12,3 +12,7 @@
 
 # Execution file
 a.out
+
+# Test file
+in.txt
+out.txt

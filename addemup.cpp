@@ -1,60 +1,74 @@
-#include <iostream>
-#include <vector>
-#include <set>
-
+#include <bits/stdc++.h>
 using namespace std;
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
 
-char mapper[10] = {'0', '1', '2', 0, 0, '5', '9', 0, '8', '6'};
+typedef long long ll;
+typedef long double ld;
 
-int turn_upside_down(string s) {
-    string new_s = "";
+struct HASH {
+  size_t operator()(const pair<int,int>&x)const{
+    size_t ans=0;
+    for(int i=0;i<x.first;i++)
+      ans+=x.second;
+    return ans;
+  }
+};
+
+template<typename T>
+using ost = tree<T, null_type, less<T>, rb_tree_tag,
+    tree_order_statistics_node_update>;
+
+void fast() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+}
+
+int n;
+
+int sum;
+
+vector<int> m {0, 1, 2, -1, -1, 5, 9, -1, 8, 6};
+
+vector<int> perms(string s) {
+    vector<int> res {stoi(s)};
+    reverse(s.begin(), s.end());
+    int ans = 0;
     bool can = true;
-    for (char ch : s) {
-        char inverted = mapper[ch - '0'];
-        if (inverted == 0) {
+    for (char c : s) {
+        ans *= 10;
+        if (m[c-'0'] != -1) {
+            ans += m[c-'0'];
+        } else {
             can = false;
             break;
         }
-        new_s = inverted + new_s;
     }
-    if (!can) return -1;
-    return stoi(new_s);
+    if (can && ans != res.back()) res.push_back(ans);
+    return res;
 }
 
 int main() {
-    int n, sum;
+    fast();
     cin >> n >> sum;
 
-    vector<int> nums(n);
+    unordered_set<int> s;
+    bool found = false;
     for (int i = 0; i < n; ++i) {
-        cin >> nums[i];
-    }
-
-    set<int> m, seen;
-    for (int i = 0; i < n; ++i) {
-        int cur = nums[i];
-        string s = to_string(cur);
-        int inverted = turn_upside_down(s);
-        m.insert(cur);
-        if (inverted != -1) {
-            m.insert(inverted);
-            if (inverted + cur == sum) {
-                if (seen.find(inverted) != seen.end()) {
-                    cout << "YES" << endl;
-                    return 0;
-                }                    
-                seen.insert(cur);
-                seen.insert(inverted);
+        string a; cin >> a;
+        vector<int> perm = perms(a);
+        for (int x : perm) {
+            int need = sum - x;
+            if (s.find(need) != s.end()) {
+                found = true;
             }
         }
+        for (int x : perm) s.insert(x);
     }
 
-    for (int it : m) {
-        int comp = sum - it;
-        if (m.find(comp) == m.end() || turn_upside_down(to_string(it)) == comp) continue;
-        cout << "YES" << endl;
-        return 0;
-    }
+    if (found) cout << "YES" << endl;
+    else cout << "NO" << endl;
 
-    cout << "NO" << endl;
+    return 0;
 }
