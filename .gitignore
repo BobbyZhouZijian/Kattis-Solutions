@@ -10,6 +10,9 @@
 # Windows
 *.cpp~
 
+# Linux
+*.cpp.swp
+
 # Execution file
 a.out
 
