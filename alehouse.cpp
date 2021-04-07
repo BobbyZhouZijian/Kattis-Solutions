@@ -1,73 +1,27 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-int t[500000] = {0};
-int lazy[500000] = {0};
-
-void push(int v) {
-	t[2 * v] += lazy[v];
-	lazy[2 * v] += lazy[v];
-
-	t[2 * v + 1] = lazy[v];
-	lazy[2 * v + 1] = lazy[v];
-
-	lazy[v] = 0;
-}
-
-void update(int v, int tl, int tr, int l, int r) {
-	if (l == tl && r == tr) {
-		t[v]++;
-		lazy[v]++;
-		return;
-	}
-
-	if (l > r) return;
-
-	push(v);
-	int mid = tl + (tr - tl) / 2;
-	update(2 * v, tl, mid, l, min(r, mid));
-	update(2 * v + 1, mid + 1, tr, max(mid + 1, l), r);
-	t[v] = max(t[2 * v], t[2 * v + 1]);
-}
-
-int get_max(int v, int tl, int tr, int l, int r) {
-	if (l > r) return 0;
-	if (l <= tl && r >= tr) return t[v];
-
-	push(v);
-	int mid = tl + (tr - tl) / 2;
-	return max(get_max(2 * v, tl, mid, l, min(r, mid)),
-		get_max(2 * v + 1, mid + 1, tr, max(mid + 1, l), r));
-}
-
+int n,k;
 
 int main() {
-	int n, k, maxm = 0;
-	cin >> n >> k;
-	vector< pair<int, int> > ppl;
+    scanf("%d%d",&n,&k);
 
-	while(n--) {
-		int a, b;
-		cin >> a >> b;
-		ppl.push_back({a, b});
-		maxm = max(maxm, b);
-	}
+    vector<pair<int,int>> p;
+    int x,y;
+    for (int i = 0; i < n; ++i) {
+        scanf("%d%d",&x,&y);
+        p.push_back({x,0});
+        p.push_back({y+k,1});
+    }
 
-	for (auto p : ppl) {
-		update(1, 0, maxm, p.first, p.second);
-	}
+    sort(p.begin(),p.end());
+    int cnt = 0, maxm = 0;
+    for (auto &[t,leave] : p) {
+        if (!leave) cnt++;
+        else cnt--;
+        maxm = max(maxm, cnt);
+    }
 
-	int ans = 0;
-
-	for (int i = 0; i <= maxm; ++i) {
-		cout << get_max(1, 0, maxm, i, i) << endl;
-	}	
-
+    printf("%d\n", maxm);
 }
-
-
-
-
-
 
